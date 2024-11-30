@@ -8,7 +8,7 @@
 ## 사용 기술
 
 - Flutter
-- Vercel Serverless
+- Vercel Functions
 - Supabase
 
 ## License

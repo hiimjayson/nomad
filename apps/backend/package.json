@@ -1,0 +1,16 @@
+{
+  "name": "nomad-backend",
+  "version": "1.0.0",
+  "description": "Nomad app backend with Vercel Functions",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@vercel/node": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  }
+}
