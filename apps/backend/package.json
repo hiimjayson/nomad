@@ -3,15 +3,12 @@
   "version": "1.0.0",
   "description": "Nomad app backend with Vercel Functions",
   "main": "index.js",
+  "type": "module",
   "engines": {
     "pnpm": "9.4.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "sync-env": "vercel env pull .env.local",
-    "dev": "vercel dev",
-    "dev:clean": "vercel dev --clean",
-    "dev:port": "vercel dev -l 3001",
     "generate-env-types": "ts-node scripts/generate-env-types.ts"
   },
   "dependencies": {
