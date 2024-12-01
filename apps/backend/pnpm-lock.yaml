@@ -8,13 +8,22 @@ importers:
 
   .:
     dependencies:
+      '@pickk/sens':
+        specifier: ^1.1.1
+        version: 1.1.1
+      '@upstash/redis':
+        specifier: ^1.34.3
+        version: 1.34.3
       '@vercel/node':
         specifier: ^3.0.0
         version: 3.2.27
     devDependencies:
       '@types/node':
-        specifier: ^20.0.0
+        specifier: ^20.17.9
         version: 20.17.9
+      ts-node:
+        specifier: ^10.9.2
+        version: 10.9.2(@types/node@20.17.9)(typescript@5.7.2)
       typescript:
         specifier: ^5.0.0
         version: 5.7.2
@@ -75,6 +84,9 @@ packages:
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==, tarball: https://registry.npmjs.org/@nodelib/fs.walk/-/fs.walk-1.2.8.tgz}
     engines: {node: '>= 8'}
 
+  '@pickk/sens@1.1.1':
+    resolution: {integrity: sha512-Odn5zn3IreujauQs9utmZ0YeagXA4OdUQSvbfkElfQHtP3EaRAu4ybTrYnfYjaMfLlzOBDGDdRikvinwuPCJUA==, tarball: https://registry.npmjs.org/@pickk/sens/-/sens-1.1.1.tgz}
+
   '@rollup/pluginutils@4.2.1':
     resolution: {integrity: sha512-iKnFXr7NkdZAIHiIWE+BX5ULi/ucVFYWD6TbAV+rZctiRTY2PL6tsIKhoIOaoskiWAkgu+VsbXgUVDNLHf+InQ==, tarball: https://registry.npmjs.org/@rollup/pluginutils/-/pluginutils-4.2.1.tgz}
     engines: {node: '>= 8.0.0'}
@@ -102,6 +114,9 @@ packages:
 
   '@types/node@20.17.9':
     resolution: {integrity: sha512-0JOXkRyLanfGPE2QRCwgxhzlBAvaRdCNMcvbd7jFfpmD4eEXll7LRwy5ymJmyeZqk7Nh7eD2LeUyQ68BbndmXw==, tarball: https://registry.npmjs.org/@types/node/-/node-20.17.9.tgz}
+
+  '@upstash/redis@1.34.3':
+    resolution: {integrity: sha512-VT25TyODGy/8ljl7GADnJoMmtmJ1F8d84UXfGonRRF8fWYJz7+2J6GzW+a6ETGtk4OyuRTt7FRSvFG5GvrfSdQ==, tarball: https://registry.npmjs.org/@upstash/redis/-/redis-1.34.3.tgz}
 
   '@vercel/build-utils@8.6.0':
     resolution: {integrity: sha512-shST7/8zY0Oi2uxgwt9S/fjat96Ohpt0bXB+4/TeekdDmIIIL8t+mg9ASEg1WGF8JjWqWx+tYQfXlvv7d/D+dg==, tarball: https://registry.npmjs.org/@vercel/build-utils/-/build-utils-8.6.0.tgz}
@@ -170,6 +185,12 @@ packages:
   async-sema@3.1.1:
     resolution: {integrity: sha512-tLRNUXati5MFePdAk8dw7Qt7DpxPB60ofAgn8WRhW6a2rcimZnYBP9oxHiv0OHy+Wz7kPMG+t4LGdt31+4EmGg==, tarball: https://registry.npmjs.org/async-sema/-/async-sema-3.1.1.tgz}
 
+  asynckit@0.4.0:
+    resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==, tarball: https://registry.npmjs.org/asynckit/-/asynckit-0.4.0.tgz}
+
+  axios@1.7.8:
+    resolution: {integrity: sha512-Uu0wb7KNqK2t5K+YQyVCLM76prD5sRFjKHbJYCP1J7JFGEQ6nN7HWn9+04LAeiJ3ji54lgS/gZCH1oxyrf1SPw==, tarball: https://registry.npmjs.org/axios/-/axios-1.7.8.tgz}
+
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==, tarball: https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.2.tgz}
 
@@ -197,6 +218,10 @@ packages:
     resolution: {integrity: sha512-qiBjkpbMLO/HL68y+lh4q0/O1MZFj2RX6X/KmMa3+gJD3z+WwI1ZzDHysvqHGS3mP6mznPckpXmw1nI9cJjyRg==, tarball: https://registry.npmjs.org/color-support/-/color-support-1.1.3.tgz}
     hasBin: true
 
+  combined-stream@1.0.8:
+    resolution: {integrity: sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==, tarball: https://registry.npmjs.org/combined-stream/-/combined-stream-1.0.8.tgz}
+    engines: {node: '>= 0.8'}
+
   concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==, tarball: https://registry.npmjs.org/concat-map/-/concat-map-0.0.1.tgz}
 
@@ -210,6 +235,9 @@ packages:
   create-require@1.1.1:
     resolution: {integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==, tarball: https://registry.npmjs.org/create-require/-/create-require-1.1.1.tgz}
 
+  crypto-js@4.2.0:
+    resolution: {integrity: sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==, tarball: https://registry.npmjs.org/crypto-js/-/crypto-js-4.2.0.tgz}
+
   debug@4.3.7:
     resolution: {integrity: sha512-Er2nc/H7RrMXZBFCEim6TCmMk02Z8vLC2Rbi1KEBggpo0fS6l0S1nnapwmIi3yW/+GOJap1Krg4w0Hg80oCqgQ==, tarball: https://registry.npmjs.org/debug/-/debug-4.3.7.tgz}
     engines: {node: '>=6.0'}
@@ -218,6 +246,10 @@ packages:
     peerDependenciesMeta:
       supports-color:
         optional: true
+
+  delayed-stream@1.0.0:
+    resolution: {integrity: sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==, tarball: https://registry.npmjs.org/delayed-stream/-/delayed-stream-1.0.0.tgz}
+    engines: {node: '>=0.4.0'}
 
   delegates@1.0.0:
     resolution: {integrity: sha512-bd2L678uiWATM6m5Z1VzNCErI3jiGzt6HGY8OVICs40JQq/HALfbyNJmp0UDakEY4pMMaN0Ly5om/B1VI/+xfQ==, tarball: https://registry.npmjs.org/delegates/-/delegates-1.0.0.tgz}
@@ -390,6 +422,19 @@ packages:
     resolution: {integrity: sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==, tarball: https://registry.npmjs.org/fill-range/-/fill-range-7.1.1.tgz}
     engines: {node: '>=8'}
 
+  follow-redirects@1.15.9:
+    resolution: {integrity: sha512-gew4GsXizNgdoRyqmyfMHyAmXsZDk6mHkSxZFCzW9gwlbtOW44CDtYavM+y+72qD/Vq2l550kMF52DT8fOLJqQ==, tarball: https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.15.9.tgz}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
+
+  form-data@4.0.1:
+    resolution: {integrity: sha512-tzN8e4TX8+kkxGPK8D5u0FNmjPUjw3lwC9lSLxxoB/+GtsJG91CO8bSWy73APlgAZzZbXEYZJuxjkHH2w+Ezhw==, tarball: https://registry.npmjs.org/form-data/-/form-data-4.0.1.tgz}
+    engines: {node: '>= 6'}
+
   fs-minipass@2.1.0:
     resolution: {integrity: sha512-V/JgOLFCS+R6Vcq0slCuaeWEdNC3ouDlJMNIsacH2VtALiu9mV4LPrHc5cDl8k5aw6J8jwgWWpiTo5RYhmIzvg==, tarball: https://registry.npmjs.org/fs-minipass/-/fs-minipass-2.1.0.tgz}
     engines: {node: '>= 8'}
@@ -463,6 +508,14 @@ packages:
   micromatch@4.0.8:
     resolution: {integrity: sha512-PXwfBhYu0hBCPw8Dn0E+WDYb7af3dSLVWKi3HGv84IdF4TyFoC0ysxFd0Goxw7nSv4T/PzEJQxsYsEiFCKo2BA==, tarball: https://registry.npmjs.org/micromatch/-/micromatch-4.0.8.tgz}
     engines: {node: '>=8.6'}
+
+  mime-db@1.52.0:
+    resolution: {integrity: sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg==, tarball: https://registry.npmjs.org/mime-db/-/mime-db-1.52.0.tgz}
+    engines: {node: '>= 0.6'}
+
+  mime-types@2.1.35:
+    resolution: {integrity: sha512-ZDY+bPm5zTTF+YpCrAU9nK0UgICYPT0QtT1NZWFv4s++TNkcgVaT0g6+4R2uI4MjQjzysHB1zxuWL50hzaeXiw==, tarball: https://registry.npmjs.org/mime-types/-/mime-types-2.1.35.tgz}
+    engines: {node: '>= 0.6'}
 
   minimatch@3.1.2:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==, tarball: https://registry.npmjs.org/minimatch/-/minimatch-3.1.2.tgz}
@@ -544,6 +597,9 @@ packages:
   pretty-ms@7.0.1:
     resolution: {integrity: sha512-973driJZvxiGOQ5ONsFhOF/DtzPMOMtgC11kCpUrPGMTgqp2q/1gwzCquocrN33is0VZ5GFHXZYMM9l6h67v2Q==, tarball: https://registry.npmjs.org/pretty-ms/-/pretty-ms-7.0.1.tgz}
     engines: {node: '>=10'}
+
+  proxy-from-env@1.1.0:
+    resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==, tarball: https://registry.npmjs.org/proxy-from-env/-/proxy-from-env-1.1.0.tgz}
 
   punycode@2.3.1:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==, tarball: https://registry.npmjs.org/punycode/-/punycode-2.3.1.tgz}
@@ -629,6 +685,20 @@ packages:
 
   ts-node@10.9.1:
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==, tarball: https://registry.npmjs.org/ts-node/-/ts-node-10.9.1.tgz}
+    hasBin: true
+    peerDependencies:
+      '@swc/core': '>=1.2.50'
+      '@swc/wasm': '>=1.2.50'
+      '@types/node': '*'
+      typescript: '>=2.7'
+    peerDependenciesMeta:
+      '@swc/core':
+        optional: true
+      '@swc/wasm':
+        optional: true
+
+  ts-node@10.9.2:
+    resolution: {integrity: sha512-f0FFpIdcHgn8zcPSbf1dRevwt047YMnaiJM3u2w2RewrB+fob/zePZcrOyQoLMMO7aBIddLcQIEK5dYjkLnGrQ==, tarball: https://registry.npmjs.org/ts-node/-/ts-node-10.9.2.tgz}
     hasBin: true
     peerDependencies:
       '@swc/core': '>=1.2.50'
@@ -745,6 +815,12 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.17.1
 
+  '@pickk/sens@1.1.1':
+    dependencies:
+      axios: 1.7.8
+    transitivePeerDependencies:
+      - debug
+
   '@rollup/pluginutils@4.2.1':
     dependencies:
       estree-walker: 2.0.2
@@ -772,6 +848,10 @@ snapshots:
   '@types/node@20.17.9':
     dependencies:
       undici-types: 6.19.8
+
+  '@upstash/redis@1.34.3':
+    dependencies:
+      crypto-js: 4.2.0
 
   '@vercel/build-utils@8.6.0': {}
 
@@ -871,6 +951,16 @@ snapshots:
 
   async-sema@3.1.1: {}
 
+  asynckit@0.4.0: {}
+
+  axios@1.7.8:
+    dependencies:
+      follow-redirects: 1.15.9
+      form-data: 4.0.1
+      proxy-from-env: 1.1.0
+    transitivePeerDependencies:
+      - debug
+
   balanced-match@1.0.2: {}
 
   bindings@1.5.0:
@@ -894,6 +984,10 @@ snapshots:
 
   color-support@1.1.3: {}
 
+  combined-stream@1.0.8:
+    dependencies:
+      delayed-stream: 1.0.0
+
   concat-map@0.0.1: {}
 
   console-control-strings@1.1.0: {}
@@ -902,9 +996,13 @@ snapshots:
 
   create-require@1.1.1: {}
 
+  crypto-js@4.2.0: {}
+
   debug@4.3.7:
     dependencies:
       ms: 2.1.3
+
+  delayed-stream@1.0.0: {}
 
   delegates@1.0.0: {}
 
@@ -1035,6 +1133,14 @@ snapshots:
     dependencies:
       to-regex-range: 5.0.1
 
+  follow-redirects@1.15.9: {}
+
+  form-data@4.0.1:
+    dependencies:
+      asynckit: 0.4.0
+      combined-stream: 1.0.8
+      mime-types: 2.1.35
+
   fs-minipass@2.1.0:
     dependencies:
       minipass: 3.3.6
@@ -1114,6 +1220,12 @@ snapshots:
       braces: 3.0.3
       picomatch: 2.3.1
 
+  mime-db@1.52.0: {}
+
+  mime-types@2.1.35:
+    dependencies:
+      mime-db: 1.52.0
+
   minimatch@3.1.2:
     dependencies:
       brace-expansion: 1.1.11
@@ -1173,6 +1285,8 @@ snapshots:
   pretty-ms@7.0.1:
     dependencies:
       parse-ms: 2.1.0
+
+  proxy-from-env@1.1.0: {}
 
   punycode@2.3.1: {}
 
@@ -1263,6 +1377,24 @@ snapshots:
       diff: 4.0.2
       make-error: 1.3.6
       typescript: 4.9.5
+      v8-compile-cache-lib: 3.0.1
+      yn: 3.1.1
+
+  ts-node@10.9.2(@types/node@20.17.9)(typescript@5.7.2):
+    dependencies:
+      '@cspotcode/source-map-support': 0.8.1
+      '@tsconfig/node10': 1.0.11
+      '@tsconfig/node12': 1.0.11
+      '@tsconfig/node14': 1.0.3
+      '@tsconfig/node16': 1.0.4
+      '@types/node': 20.17.9
+      acorn: 8.14.0
+      acorn-walk: 8.3.4
+      arg: 4.1.3
+      create-require: 1.1.1
+      diff: 4.0.2
+      make-error: 1.3.6
+      typescript: 5.7.2
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
 
