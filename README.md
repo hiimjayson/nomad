@@ -11,6 +11,15 @@
 - Vercel Functions
 - Supabase
 
+## 사용한 AI
+
+- GPT
+- Cursor
+
+## 사용한 프롬프트
+
+- [prompts/README.md](./prompts/README.md)
+
 ## License
 
 이 프로젝트는 MIT 라이선스를 따릅니다. 자세한 내용은 [LICENSE](LICENSE) 파일을 참조하세요.
