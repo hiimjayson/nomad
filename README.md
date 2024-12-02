@@ -8,7 +8,7 @@
 ## 사용 기술
 
 - Flutter
-- Vercel Functions
+- Express.js
 - Supabase
 
 ## 사용한 AI

@@ -1,20 +1,16 @@
 {
   "compilerOptions": {
     "target": "es2017",
-    "module": "esnext",
+    "module": "commonjs",
     "moduleResolution": "node",
+    "outDir": "./dist",
+    "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "outDir": "dist"
+    "typeRoots": ["./node_modules/@types", "./src/types"]
   },
-  "include": [
-    "api/**/*",
-    "features/**/*",
-    "lib/**/*",
-    "types/**/*",
-    "utils/**/*"
-  ],
+  "include": ["src/**/*"],
   "exclude": ["node_modules"]
 }

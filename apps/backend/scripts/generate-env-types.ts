@@ -4,7 +4,7 @@ import path from "path";
 
 const ENV_LOCAL_PATH = path.join(__dirname, "..", ".env.local");
 const ENV_PATH = path.join(__dirname, "..", ".env");
-const OUTPUT_FILE_PATH = path.join(__dirname, "..", "env.d.ts");
+const OUTPUT_FILE_PATH = path.join(__dirname, "../src/types", "env.d.ts");
 
 function readEnvFile(filePath: string): string {
   return fs.readFileSync(filePath, "utf-8");
