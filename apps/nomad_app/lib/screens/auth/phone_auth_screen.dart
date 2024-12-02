@@ -17,6 +17,29 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
   bool _isValid = false;
   bool _isLoading = false;
 
+  Future<void> _requestVerification() async {
+    setState(() => _isLoading = true);
+    try {
+      await authService.sendVerification(_phoneController.text);
+      if (!mounted) return;
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => VerificationScreen(
+            phoneNumber: _phoneController.text,
+          ),
+        ),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString())),
+      );
+    } finally {
+      setState(() => _isLoading = false);
+    }
+  }
+
   @override
   void dispose() {
     _phoneController.dispose();
@@ -26,6 +49,9 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
   void _validatePhone(String value) {
     setState(() {
       _isValid = value.length == 13; // 010-0000-0000 형식
+      if (_isValid) {
+        _requestVerification();
+      }
     });
   }
 
@@ -96,29 +122,7 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                 child: Button(
                   text: '인증번호 받기',
                   isLoading: _isLoading,
-                  onPressed: _isValid
-                      ? () async {
-                          setState(() => _isLoading = true);
-                          try {
-                            await authService
-                                .sendVerification(_phoneController.text);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => VerificationScreen(
-                                  phoneNumber: _phoneController.text,
-                                ),
-                              ),
-                            );
-                          } catch (e) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(e.toString())),
-                            );
-                          } finally {
-                            setState(() => _isLoading = false);
-                          }
-                        }
-                      : null,
+                  onPressed: _isValid ? _requestVerification : null,
                 ),
               ),
             ],
