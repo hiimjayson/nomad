@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nomad_app/screens/auth/verification_screen.dart';
 import 'package:nomad_app/components/ui/button.dart';
+import 'package:nomad_app/screens/map/map_screen.dart';
 import 'package:nomad_app/services/auth/auth_service.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -18,6 +19,15 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
   bool _isLoading = false;
 
   Future<void> _requestVerification() async {
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(
+        builder: (context) => const MapScreen(),
+      ),
+      (route) => false,
+    );
+
+    return;
+
     setState(() => _isLoading = true);
     try {
       await authService.sendVerification(_phoneController.text);

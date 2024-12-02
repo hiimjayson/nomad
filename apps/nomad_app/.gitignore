@@ -41,3 +41,8 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Environment files
+.env*
+/ios/Runner/GoogleMaps-Keys.swift
+/android/app/src/main/res/values/google_maps_api.xml

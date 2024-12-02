@@ -3,6 +3,7 @@ import 'package:nomad_app/core/theme/app_colors.dart';
 import 'package:nomad_app/components/ui/button.dart';
 import 'package:nomad_app/components/ui/pin_code_field.dart';
 import 'package:nomad_app/services/auth/auth_service.dart';
+import 'package:nomad_app/screens/map/map_screen.dart';
 
 class VerificationScreen extends StatefulWidget {
   final String phoneNumber;
@@ -25,6 +26,32 @@ class _VerificationScreenState extends State<VerificationScreen> {
   void dispose() {
     _codeController.dispose();
     super.dispose();
+  }
+
+  Future<void> _verifyCode() async {
+    setState(() => _isLoading = true);
+    try {
+      await authService.verifyCode(
+        widget.phoneNumber,
+        _codeController.text,
+      );
+      if (!mounted) return;
+
+      // 인증 성공 시 지도 화면으로 이동하고 이전 화면들을 모두 제거
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (context) => const MapScreen(),
+        ),
+        (route) => false,
+      );
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString())),
+      );
+    } finally {
+      setState(() => _isLoading = false);
+    }
   }
 
   @override
@@ -69,20 +96,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 isLoading: _isLoading,
                 onPressed: _isValid
                     ? () async {
-                        setState(() => _isLoading = true);
-                        try {
-                          await authService.verifyCode(
-                            widget.phoneNumber,
-                            _codeController.text,
-                          );
-                          // TODO: 인증 성공 후 메인 화면으로 이동
-                        } catch (e) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(e.toString())),
-                          );
-                        } finally {
-                          setState(() => _isLoading = false);
-                        }
+                        await _verifyCode();
                       }
                     : null,
               ),
