@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:nomad_app/screens/auth/verification_screen.dart';
 import 'package:nomad_app/components/ui/button.dart';
 import 'package:nomad_app/services/auth/auth_service.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class PhoneAuthScreen extends StatefulWidget {
   const PhoneAuthScreen({super.key});
@@ -54,57 +55,71 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
         child: Padding(
           padding: const EdgeInsets.all(24.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 60),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.15),
+              SvgPicture.asset(
+                'assets/images/hand_wave.svg',
+                width: 128,
+                height: 128,
+              ),
+              const SizedBox(height: 24),
               Text(
                 '안녕하세요!\n전화번호를 입력해주세요.',
-                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
               ),
               const SizedBox(height: 40),
-              TextField(
-                controller: _phoneController,
-                keyboardType: TextInputType.phone,
-                decoration: InputDecoration(
-                  hintText: '010-0000-0000',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+              SizedBox(
+                width: double.infinity,
+                child: TextField(
+                  controller: _phoneController,
+                  keyboardType: TextInputType.phone,
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                    hintText: '010-0000-0000',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                   ),
+                  onChanged: (value) {
+                    _formatPhone(value);
+                    _validatePhone(value);
+                  },
                 ),
-                onChanged: (value) {
-                  _formatPhone(value);
-                  _validatePhone(value);
-                },
               ),
               const Spacer(),
-              Button(
-                text: '인증번호 받기',
-                isLoading: _isLoading,
-                onPressed: _isValid
-                    ? () async {
-                        setState(() => _isLoading = true);
-                        try {
-                          await authService
-                              .sendVerification(_phoneController.text);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => VerificationScreen(
-                                phoneNumber: _phoneController.text,
+              SizedBox(
+                width: double.infinity,
+                child: Button(
+                  text: '인증번호 받기',
+                  isLoading: _isLoading,
+                  onPressed: _isValid
+                      ? () async {
+                          setState(() => _isLoading = true);
+                          try {
+                            await authService
+                                .sendVerification(_phoneController.text);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => VerificationScreen(
+                                  phoneNumber: _phoneController.text,
+                                ),
                               ),
-                            ),
-                          );
-                        } catch (e) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(e.toString())),
-                          );
-                        } finally {
-                          setState(() => _isLoading = false);
+                            );
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(e.toString())),
+                            );
+                          } finally {
+                            setState(() => _isLoading = false);
+                          }
                         }
-                      }
-                    : null,
+                      : null,
+                ),
               ),
             ],
           ),
