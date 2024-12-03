@@ -1,5 +1,3 @@
-⌘K to generate a command
-⌘K to generate a command
 @nomad_app
 
 아래 SVG 이미지를 PhoneAuthScreen에 넣어줘
