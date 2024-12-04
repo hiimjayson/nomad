@@ -22,9 +22,12 @@ class _MapScreenState extends State<MapScreen> {
         children: [
           GoogleMap(
             initialCameraPosition: _initialCameraPosition,
-            myLocationButtonEnabled: true,
+            myLocationButtonEnabled: false,
             myLocationEnabled: true,
-            zoomControlsEnabled: false,
+            mapToolbarEnabled: false,
+            zoomControlsEnabled: true,
+            trafficEnabled: false,
+            buildingsEnabled: false,
             onMapCreated: (controller) {
               // 지도 컨트롤러 초기화
             },
