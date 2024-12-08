@@ -95,4 +95,10 @@ Apply these principles judiciously, considering project and team needs.
 
 ## Commit Message:
 
-- Write in Korean
+- Each commit message should include the following:
+
+```
+<type>(<scope>): <subject>
+```
+
+- Write subject in Korean, type and scope in English.
