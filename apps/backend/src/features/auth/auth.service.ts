@@ -1,5 +1,5 @@
-import { redis } from "../../lib/redis";
-import { smsClient } from "../../lib/sms";
+import { redis } from "../../providers/redis";
+import { smsClient } from "../../providers/sms";
 import { VerificationInfo } from "./types";
 import {
   generateVerificationCode,
