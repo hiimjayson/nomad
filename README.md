@@ -16,6 +16,12 @@
 - GPT
 - Cursor
 
+## 사용된 문서
+
+- [유스케이스](./docs/usecase.md)
+- [PRD](./docs/prd.md)
+- [IA](./docs/ia.md)
+
 ## 사용한 프롬프트
 
 - [prompts/README.md](./prompts/README.md)
