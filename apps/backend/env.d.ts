@@ -9,6 +9,5 @@ declare namespace NodeJS {
     UPSTASH_REDIS_REST_TOKEN: string;
     SUPABASE_URL: string;
     SUPABASE_ANON_KEY: string;
-    TESTER_PHONE_NUMBER: string;
   }
 }
