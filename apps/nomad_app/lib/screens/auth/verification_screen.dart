@@ -4,6 +4,8 @@ import 'package:nomad_app/components/ui/button.dart';
 import 'package:nomad_app/components/ui/pin_code_field.dart';
 import 'package:nomad_app/services/auth/auth_service.dart';
 import 'package:nomad_app/screens/map/map_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../blocs/auth/auth_bloc.dart';
 
 class VerificationScreen extends StatefulWidget {
   final String phoneNumber;
@@ -31,19 +33,13 @@ class _VerificationScreenState extends State<VerificationScreen> {
   Future<void> _verifyCode() async {
     setState(() => _isLoading = true);
     try {
-      await authService.verifyCode(
-        widget.phoneNumber,
-        _codeController.text,
-      );
+      final response = await authService.verifyCode(
+          widget.phoneNumber, _codeController.text);
+
       if (!mounted) return;
 
-      // 인증 성공 시 지도 화면으로 이동하고 이전 화면들을 모두 제거
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-          builder: (context) => const MapScreen(),
-        ),
-        (route) => false,
-      );
+      // AuthBloc 상태 업데이트
+      context.read<AuthBloc>().emit(Authenticated(response.user.uid));
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(

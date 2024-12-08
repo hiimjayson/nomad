@@ -28,3 +28,4 @@
 5. [플러터 - 인증화면 디자인 개선](./1_development/4_update_phone_auth_screen_design.md)
 6. [플러터 - 지도화면 구현](./1_development/5_add_map_screen.md)
 7. [백엔드 - User 데이터베이스 연결](./1_development/6_add_user_database.md)
+8. [플러터 - 초기화면 흐름 완료](./1_development/7_complete_initial_screen_flow.md)

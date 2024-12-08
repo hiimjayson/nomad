@@ -19,15 +19,6 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
   bool _isLoading = false;
 
   Future<void> _requestVerification() async {
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(
-        builder: (context) => const MapScreen(),
-      ),
-      (route) => false,
-    );
-
-    return;
-
     setState(() => _isLoading = true);
     try {
       await authService.sendVerification(_phoneController.text);

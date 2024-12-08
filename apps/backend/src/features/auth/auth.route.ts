@@ -74,9 +74,10 @@ router.post("/refresh", validateBearerToken, async (req, res, next) => {
     const payload = jwt.verifyRefreshToken(req.token!);
     const tokens = jwt.generateTokens({ uid: payload.uid });
 
-    res.status(200).json({
-      message: "토큰이 갱신되었습니다.",
-      ...tokens,
+    res.json({
+      accessToken: tokens.accessToken,
+      refreshToken: tokens.refreshToken,
+      uid: payload.uid,
     });
   } catch (error) {
     next(error);
