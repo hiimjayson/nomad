@@ -49,3 +49,12 @@ phoneNumber: string;
 isTester: boolean;
 createdAt: Date;
 updatedAt: Date;
+
+---
+
+휴대폰번호를 입력받아 가입여부 체크하는 api 추가해줘.
+경로는 /auth/check로 GET으로 구현하자
+
+---
+
+auth schema들이 user schema를 적절히 pick한 후 extend하도록 수정해줘

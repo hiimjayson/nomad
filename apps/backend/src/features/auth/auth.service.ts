@@ -1,5 +1,6 @@
 import { redis } from "../../providers/redis";
 import { smsClient } from "../../providers/sms";
+import { supabase } from "../../providers/supabase";
 import { VerificationInfo } from "./types";
 import {
   generateVerificationCode,
@@ -44,4 +45,19 @@ export async function verifyCode(
 
   await redis.del(key);
   return true;
+}
+
+export async function checkUserExists(phoneNumber: string): Promise<boolean> {
+  const { data, error } = await supabase
+    .from("users")
+    .select("uid")
+    .eq("phoneNumber", phoneNumber)
+    .single();
+
+  if (error && error.code !== "PGRST116") {
+    // PGRST116는 데이터를 찾지 못했을 때의 에러 코드
+    throw error;
+  }
+
+  return !!data;
 }
