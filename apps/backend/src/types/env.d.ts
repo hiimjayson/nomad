@@ -10,6 +10,8 @@ declare global {
       NCP_CALLING_NUMBER: string;
       UPSTASH_REDIS_REST_URL: string;
       UPSTASH_REDIS_REST_TOKEN: string;
+      JWT_ACCESS_SECRET: string;
+      JWT_REFRESH_SECRET: string;
     }
   }
 }

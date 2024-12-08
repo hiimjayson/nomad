@@ -1,11 +1,13 @@
 import { Router } from "express";
-import { sendVerification, verifyCode, checkUserExists } from "./auth.service";
+import * as AuthService from "./auth.service";
+import * as UserService from "../user/user.service";
 import {
   SendVerificationSchema,
   VerifyCodeSchema,
   CheckUserSchema,
 } from "./auth.schema";
 import { validateZodPipe } from "../../common/middlewares/zod-pipe";
+import { jwt } from "../../providers/jwt";
 
 const router = Router();
 
@@ -14,7 +16,7 @@ router.post(
   validateZodPipe(SendVerificationSchema),
   async (req, res, next) => {
     try {
-      await sendVerification(req.body.phoneNumber);
+      await AuthService.sendVerification(req.body.phoneNumber);
       res.status(200).json({ message: "인증번호가 발송되었습니다." });
     } catch (error) {
       next(error);
@@ -28,8 +30,20 @@ router.post(
   async (req, res, next) => {
     try {
       const { phoneNumber, code } = req.body;
-      await verifyCode(phoneNumber, code);
-      res.status(200).json({ message: "인증이 완료되었습니다." });
+      await AuthService.verifyCode(phoneNumber, code);
+
+      const user = await UserService.findOrCreate(phoneNumber);
+      const tokens = jwt.generateTokens({ uid: user.uid });
+
+      res.status(200).json({
+        message: user.isNew
+          ? "회원가입이 완료되었습니다."
+          : "로그인이 완료되었습니다.",
+        result: {
+          user,
+          tokens,
+        },
+      });
     } catch (error) {
       next(error);
     }
@@ -41,7 +55,7 @@ router.get(
   validateZodPipe(CheckUserSchema),
   async (req, res, next) => {
     try {
-      const exists = await checkUserExists(req.body.phoneNumber);
+      const exists = await UserService.checkExists(req.body.phoneNumber);
       res.status(200).json({
         exists,
         message: exists

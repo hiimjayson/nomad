@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import { createClient } from "@supabase/supabase-js";
 
 if (!process.env.SUPABASE_URL) throw new Error("SUPABASE_URL is required");

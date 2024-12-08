@@ -58,3 +58,15 @@ updatedAt: Date;
 ---
 
 auth schema들이 user schema를 적절히 pick한 후 extend하도록 수정해줘
+
+---
+
+verify code API에서 인증이 성공한 후 다음과 같이 작동하도록 수정해줘
+
+1. 이미 가입된 번호인 경우, JWT를 발급 후 반환한다.
+2. 가입되지 않은번호인 경우, 유저 데이터베이스를 생성하고 JWT를 발급 후 반환한다.
+
+응답필드는 다음과 같아.
+isNewUser: boolean:
+accessToken: string;
+refreshToken: string;

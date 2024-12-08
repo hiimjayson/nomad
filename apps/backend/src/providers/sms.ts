@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import { SmsClient } from "@pickk/sens";
 
 if (!process.env.NCP_ACCESS_KEY) throw new Error("NCP_ACCESS_KEY is required");

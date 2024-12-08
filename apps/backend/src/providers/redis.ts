@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import { Redis } from "@upstash/redis";
 
 if (!process.env.UPSTASH_REDIS_REST_URL)
