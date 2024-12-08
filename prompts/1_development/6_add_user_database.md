@@ -67,6 +67,36 @@ verify code API에서 인증이 성공한 후 다음과 같이 작동하도록 �
 2. 가입되지 않은번호인 경우, 유저 데이터베이스를 생성하고 JWT를 발급 후 반환한다.
 
 응답필드는 다음과 같아.
-isNewUser: boolean:
+isNew: boolean:
+user: {
+uid: string;
+}
+tokens: {
 accessToken: string;
 refreshToken: string;
+}
+
+---
+
+사용자 관련 로직은 features/user/user.service.ts로 분리해. 그리고 jwt 관련 로직은 providers/jwt.ts로 분리해
+
+---
+
+/auth/refresh api 추가해줘.
+Bearer 헤더로 refresh token을 전달받아 유효한 경우 신규 토큰 생성해서 반환하면돼.
+응답 필드는
+
+- accessToken: string;
+- refreshToken: string;
+  이야.
+  AOP를 고려해서 설계하고 이를 설명한 뒤 구현해줘
+
+---
+
+@backend
+
+아래 에러가 발생해 수정해줘
+
+src/features/auth/auth.route.ts:74:48 - error TS2339: Property 'token' does not exist on type 'Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+
+74 const payload = jwt.verifyRefreshToken(req.token!);

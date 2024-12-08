@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import jsonwebtoken from "jsonwebtoken";
+import { BadRequestError } from "../common/errors/http.error";
 
 interface TokenPayload {
   uid: string;
@@ -38,6 +39,20 @@ export class JwtService {
       accessToken: this.generateAccessToken(payload, "1h"),
       refreshToken: this.generateRefreshToken(payload, "7d"),
     };
+  }
+
+  verifyRefreshToken(token: string) {
+    try {
+      return jsonwebtoken.verify(token, this.refreshSecret) as TokenPayload;
+    } catch (error) {
+      if (error instanceof jsonwebtoken.TokenExpiredError) {
+        throw new BadRequestError("만료된 토큰입니다.");
+      }
+      if (error instanceof jsonwebtoken.JsonWebTokenError) {
+        throw new BadRequestError("유효하지 않은 토큰입니다.");
+      }
+      throw error;
+    }
   }
 }
 
