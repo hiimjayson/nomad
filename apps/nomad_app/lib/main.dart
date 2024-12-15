@@ -5,8 +5,15 @@ import 'package:nomad_app/screens/auth/phone_auth_screen.dart';
 import 'package:nomad_app/screens/map/map_screen.dart';
 import 'package:nomad_app/services/auth/auth_service.dart';
 import 'package:nomad_app/core/theme/app_colors.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_naver_map/flutter_naver_map.dart';
 
-void main() {
+void main() async {
+  await dotenv.load(fileName: ".env");
+
+  await NaverMapSdk.instance
+      .initialize(clientId: dotenv.env['NAVER_MAP_CLIENT_ID']!);
+
   runApp(const MyApp());
 }
 

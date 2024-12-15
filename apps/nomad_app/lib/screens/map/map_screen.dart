@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:nomad_app/core/theme/app_colors.dart';
 
 class MapScreen extends StatefulWidget {
@@ -10,9 +10,11 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
-  static const _initialCameraPosition = CameraPosition(
-    target: LatLng(37.5665, 126.9780), // 서울 시청 좌표
-    zoom: 15,
+  static const _initialCameraPosition = NCameraPosition(
+    target: NLatLng(37.5665, 126.9780),
+    zoom: 10,
+    bearing: 0,
+    tilt: 0,
   );
 
   @override
@@ -20,17 +22,17 @@ class _MapScreenState extends State<MapScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          GoogleMap(
-            initialCameraPosition: _initialCameraPosition,
-            myLocationButtonEnabled: false,
-            myLocationEnabled: true,
-            mapToolbarEnabled: false,
-            zoomControlsEnabled: true,
-            trafficEnabled: false,
-            buildingsEnabled: false,
-            onMapCreated: (controller) {
-              // 지도 컨트롤러 초기화
-            },
+          NaverMap(
+            options: const NaverMapViewOptions(
+              initialCameraPosition: _initialCameraPosition,
+            ),
+            forceGesture: false,
+            onMapReady: (controller) {},
+            onMapTapped: (point, latLng) {},
+            onSymbolTapped: (symbol) {},
+            onCameraChange: (position, reason) {},
+            onCameraIdle: () {},
+            onSelectedIndoorChanged: (indoor) {},
           ),
           _buildSearchBar(),
           _buildProfileButton(),
