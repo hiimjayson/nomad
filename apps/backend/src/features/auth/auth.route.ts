@@ -17,8 +17,26 @@ router.post(
   validateZodPipe(SendVerificationSchema),
   async (req, res, next) => {
     try {
-      await AuthService.sendVerification(req.body.phoneNumber);
-      res.status(200).json({ message: "인증번호가 발송되었습니다." });
+      const { type, uid } = await UserService.checkUserType(
+        req.body.phoneNumber.replace(/[^\d]/g, "")
+      );
+
+      if (type === "tester") {
+        const user = await UserService.getByUid(uid);
+
+        const tokens = jwt.generateTokens({ uid });
+        res.status(200).json({
+          code: "TESTER_LOGGED_IN",
+          message: "테스터 로그인이 완료되었습니다.",
+          result: { user, tokens },
+        });
+      } else {
+        await AuthService.sendVerification(req.body.phoneNumber);
+        res.status(200).json({
+          code: "VERIFICATION_SENT",
+          message: "인증번호가 발송되었습니다.",
+        });
+      }
     } catch (error) {
       next(error);
     }
@@ -33,17 +51,12 @@ router.post(
       const { phoneNumber, code } = req.body;
       await AuthService.verifyCode(phoneNumber, code);
 
-      const user = await UserService.findOrCreate(phoneNumber);
+      const { isNew, user } = await UserService.findOrCreate(phoneNumber);
       const tokens = jwt.generateTokens({ uid: user.uid });
 
       res.status(200).json({
-        message: user.isNew
-          ? "회원가입이 완료되었습니다."
-          : "로그인이 완료되었습니다.",
-        result: {
-          user,
-          tokens,
-        },
+        message: "로그인이 완료되었습니다.",
+        result: { user, tokens, isNew },
       });
     } catch (error) {
       next(error);
@@ -52,16 +65,15 @@ router.post(
 );
 
 router.get(
-  "/check",
+  "/check-type",
   validateZodPipe(CheckUserSchema),
   async (req, res, next) => {
     try {
-      const exists = await UserService.checkExists(req.body.phoneNumber);
+      const userType = await UserService.checkUserType(req.body.phoneNumber);
+
       res.status(200).json({
-        exists,
-        message: exists
-          ? "이미 가입된 사용자입니다."
-          : "가입 가능한 번호입니다.",
+        userType,
+        message: "userType checked",
       });
     } catch (error) {
       next(error);
