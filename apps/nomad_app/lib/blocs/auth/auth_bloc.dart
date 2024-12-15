@@ -15,6 +15,15 @@ class AuthCheckRequested extends AuthEvent {}
 
 class AuthLogoutRequested extends AuthEvent {}
 
+class AuthenticatedEvent extends AuthEvent {
+  final String uid;
+
+  AuthenticatedEvent(this.uid);
+
+  @override
+  List<Object?> get props => [uid];
+}
+
 // States
 abstract class AuthState extends Equatable {
   const AuthState();
@@ -45,6 +54,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         super(AuthInitial()) {
     on<AuthCheckRequested>(_onAuthCheckRequested);
     on<AuthLogoutRequested>(_onAuthLogoutRequested);
+    on<AuthenticatedEvent>((event, emit) {
+      emit(Authenticated(event.uid));
+    });
   }
 
   Future<void> _onAuthCheckRequested(

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:nomad_app/screens/auth/verification_screen.dart';
 import 'package:nomad_app/components/ui/button.dart';
-import 'package:nomad_app/screens/map/map_screen.dart';
-import 'package:nomad_app/services/auth/auth_service.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:nomad_app/services/auth/auth_service.dart';
+import 'package:nomad_app/services/auth/token_storage.dart';
+import 'package:nomad_app/blocs/auth/auth_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PhoneAuthScreen extends StatefulWidget {
   const PhoneAuthScreen({super.key});
@@ -21,18 +22,35 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
   Future<void> _requestVerification() async {
     setState(() => _isLoading = true);
     try {
-      await authService.sendVerification(_phoneController.text);
-      if (!mounted) return;
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => VerificationScreen(
-            phoneNumber: _phoneController.text,
+      final response =
+          await authService.sendVerification(_phoneController.text);
+      if (response.code == "TESTER_LOGGED_IN") {
+        if (response.tokens == null) {
+          throw Exception("Tokens are null");
+        }
+        if (response.user == null) {
+          throw Exception("User is null");
+        }
+
+        await TokenStorage.saveTokens(
+          accessToken: response.tokens!.accessToken,
+          refreshToken: response.tokens!.refreshToken,
+        );
+
+        context.read<AuthBloc>().add(AuthenticatedEvent(response.user!.uid));
+      } else if (response.code == "VERIFICATION_SENT") {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => VerificationScreen(
+              phoneNumber: _phoneController.text,
+            ),
           ),
-        ),
-      );
+        );
+      }
     } catch (e) {
       if (!mounted) return;
+      print("Error: $e");
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(e.toString())),
       );

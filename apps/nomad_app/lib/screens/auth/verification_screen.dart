@@ -3,7 +3,6 @@ import 'package:nomad_app/core/theme/app_colors.dart';
 import 'package:nomad_app/components/ui/button.dart';
 import 'package:nomad_app/components/ui/pin_code_field.dart';
 import 'package:nomad_app/services/auth/auth_service.dart';
-import 'package:nomad_app/screens/map/map_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../blocs/auth/auth_bloc.dart';
 
@@ -39,7 +38,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
       if (!mounted) return;
 
       // AuthBloc 상태 업데이트
-      context.read<AuthBloc>().emit(Authenticated(response.user.uid));
+      context.read<AuthBloc>().add(AuthenticatedEvent(response.user.uid));
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(

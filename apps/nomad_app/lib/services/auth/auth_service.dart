@@ -112,7 +112,7 @@ class User {
 
   User({required this.uid});
 
-  factory User.fromJson(Map<String, dynamic> json) {
+  factory User.fromJson(json) {
     return User(uid: json['uid'] as String);
   }
 }
@@ -123,7 +123,7 @@ class Tokens {
 
   Tokens({required this.accessToken, required this.refreshToken});
 
-  factory Tokens.fromJson(Map<String, dynamic> json) {
+  factory Tokens.fromJson(json) {
     return Tokens(
       accessToken: json['accessToken'] as String,
       refreshToken: json['refreshToken'] as String,
@@ -142,7 +142,7 @@ class TokenResponse {
     required this.uid,
   });
 
-  factory TokenResponse.fromJson(Map<String, dynamic> json) {
+  factory TokenResponse.fromJson(json) {
     return TokenResponse(
       accessToken: json['accessToken'] as String,
       refreshToken: json['refreshToken'] as String,
