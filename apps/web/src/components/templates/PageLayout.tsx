@@ -16,7 +16,7 @@ export function PageLayout({ children }: { children: React.ReactNode }) {
 PageLayout.Header = function Header() {
   return (
     <>
-      <header className="flex justify-between items-center p-4 fixed w-full max-w-screen-md  h-16 border-b-2 border-typo-time">
+      <header className="flex justify-between items-center p-4 fixed w-full max-w-screen-md  h-16 border-b-2 border-typo-time bg-background-default">
         <Link href="/">
           <Image src="/images/logo.svg" alt="로고" width={120} height={22} />
         </Link>
@@ -28,7 +28,7 @@ PageLayout.Header = function Header() {
 
 PageLayout.Footer = function Footer() {
   return (
-    <footer className="px-4 pt-8 pb-12 w-full text-right border-y-2 border-typo-time">
+    <footer className="px-4 pt-8 pb-12 w-full text-right border-t-2 border-typo-time">
       <span className="text-sm text-typo-time">© 2024 Cafegram</span>
     </footer>
   );
