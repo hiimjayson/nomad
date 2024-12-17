@@ -1,5 +1,6 @@
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { useMemo } from "react";
+import { isEmptyStringOrNil } from "@/lib/string";
 
 export function useSearchParamState(
   key: string,
@@ -15,9 +16,14 @@ export function useSearchParamState(
 
     return [
       value,
-      function set(value: string) {
+      function set(value: string | null) {
         const newSearchParams = new URLSearchParams(searchParams);
-        newSearchParams.set(key, value);
+
+        if (isEmptyStringOrNil(value)) {
+          newSearchParams.delete(key);
+        } else {
+          newSearchParams.set(key, value);
+        }
 
         router[strategy](`${pathname}?${newSearchParams.toString()}`);
       },

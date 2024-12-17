@@ -9,6 +9,8 @@ export type Nullable<T> = T | null;
 
 export type Nilable<T> = T | null | undefined;
 
+export type Nil = null | undefined;
+
 export type OmitPropsOf<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   T extends keyof JSX.IntrinsicElements | JSXElementConstructor<any>,

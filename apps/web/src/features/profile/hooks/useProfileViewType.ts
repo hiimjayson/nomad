@@ -18,6 +18,15 @@ export function useProfileViewType() {
       ? view
       : ProfileViewType.Grid;
 
-    return [_view, setView] as const;
+    return [
+      _view,
+      function set(value: ProfileViewType) {
+        if (value === ProfileViewType.Grid) {
+          setView(null);
+        } else {
+          setView(value);
+        }
+      },
+    ] as const;
   }, [view, setView]);
 }
