@@ -24,13 +24,13 @@ export function ProfilePosts() {
       {posts.length === 0 ? (
         <ProfilePosts.Empty />
       ) : (
-        posts.map((post) => (
+        [...posts].reverse().map((post) => (
           <SwitchCase
             key={post.id}
             value={view}
             caseBy={{
-              [ProfileViewType.Grid]: <PostCard.Grid />,
-              [ProfileViewType.List]: <PostCard.List />,
+              [ProfileViewType.Grid]: <PostCard.Grid {...post} />,
+              [ProfileViewType.List]: <PostCard.List {...post} />,
             }}
           />
         ))

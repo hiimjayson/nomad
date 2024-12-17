@@ -1,3 +1,4 @@
+import { ValueOf } from "@/types/util";
 import { Profile } from "../profile/const";
 
 export type AddressElementType =
@@ -11,16 +12,41 @@ export type AddressElementType =
   | "LAND_NUMBER"
   | "POSTAL_CODE";
 
+export const DayType = {
+  MON: "MON",
+  TUE: "TUE",
+  WED: "WED",
+  THU: "THU",
+  FRI: "FRI",
+  SAT: "SAT",
+  SUN: "SUN",
+} as const;
+export type DayType = ValueOf<typeof DayType>;
+export interface SpaceSchedule {
+  day: DayType;
+  openTime: string;
+  closeTime: string;
+}
+
+export function getAlldaySchedules(open: string, close: string) {
+  return Object.values(DayType).map((day) => ({
+    day,
+    openTime: open,
+    closeTime: close,
+  }));
+}
+
 export interface Space {
   id: string;
   name: string;
-  createdAt: string;
-  updatedAt: string;
+
+  schedules: SpaceSchedule[];
 
   latitude: number;
   longitude: number;
 
   address: string;
+  shortAddress: string;
   addressElements: {
     type: AddressElementType;
     longName: string;
@@ -37,7 +63,7 @@ export interface Post {
   createdAt: string;
 
   user: Profile;
-  space: string;
+  space: Space;
 
   images: string[];
   content: string;
