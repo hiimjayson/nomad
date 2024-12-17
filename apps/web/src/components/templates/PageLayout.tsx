@@ -4,7 +4,7 @@ import Link from "next/link";
 export function PageLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen w-screen">
-      <div className="flex flex-col min-h-full w-full max-w-screen-md mx-auto bg-background-default border-x-2 border-typo-time">
+      <div className="flex flex-col min-h-full w-full max-w-screen-md mx-auto bg-background-default md:border-x-2 border-typo-time">
         <PageLayout.Header />
         <main className="flex flex-col">{children}</main>
         <PageLayout.Footer />
