@@ -16,10 +16,10 @@ export function useProfileViewType() {
       view as ProfileViewType
     )
       ? view
-      : ProfileViewType.Grid;
+      : null;
 
     return [
-      _view,
+      _view ?? ProfileViewType.Grid,
       function set(value: ProfileViewType) {
         if (value === ProfileViewType.Grid) {
           setView(null);

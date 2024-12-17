@@ -1,6 +1,6 @@
 "use client";
 
-import { Grid3x3, Rows3, SlidersHorizontal } from "lucide-react";
+import { Grid3x3, Rows3, Sparkles } from "lucide-react";
 import { Suspense } from "react";
 import {
   ProfileViewType,
@@ -20,7 +20,7 @@ function Resolved() {
     "
     >
       <IconButton>
-        <SlidersHorizontal />
+        <Sparkles />
       </IconButton>
       <span>|</span>
       <IconButton

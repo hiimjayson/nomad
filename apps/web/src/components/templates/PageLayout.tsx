@@ -28,7 +28,7 @@ PageLayout.Header = function Header() {
 
 PageLayout.Footer = function Footer() {
   return (
-    <footer className="px-4 pt-8 pb-12 w-full text-right border-t-2 border-typo-time">
+    <footer className="px-4 pt-8 pb-12 w-full text-right border-t-2 border-typo-time bg-typo-time bg-opacity-10">
       <span className="text-sm text-typo-time text-opacity-60">
         © 2024 Cafegram
       </span>

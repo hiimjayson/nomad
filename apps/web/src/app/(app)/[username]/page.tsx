@@ -15,9 +15,9 @@ export default function ProfilePage() {
         <ProfileHeader
           {...pick(profile, ["avatar", "nickname", "username", "postCount"])}
         />
-        <Spacing size={16} />
+        <Spacing size={52} />
         <ProfileToolbar />
-        <Spacing size={16} />
+        <Spacing size={12} />
         <ProfilePosts />
       </div>
     </>

@@ -23,7 +23,10 @@ export function ProfileHeader({
         <IconButton
           onClick={async () => {
             try {
-              await share({ title: nickname, url: window.location.href });
+              await share({
+                title: nickname,
+                url: window.location.href.split("?")[0],
+              });
             } catch (error) {
               console.error("공유에 실패했습니다.", error);
             }

@@ -1,25 +1,67 @@
+"use client";
+
+import { cn } from "@/lib/cn";
+import {
+  ProfileViewType,
+  useProfileViewType,
+} from "../hooks/useProfileViewType";
+import { PostCard } from "@/components/molecules/PostCard";
+import { SwitchCase } from "@toss/react";
+import { POSTS } from "@/features/post-detail/const";
+
 export function ProfilePosts() {
+  const [view] = useProfileViewType();
+
+  const posts = POSTS;
+
   return (
-    <div className="w-full grid grid-cols-2 gap-1">
-      <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard />
+    <div
+      className={cn(
+        "w-full grid grid-cols-2 gap-x-2 gap-y-3 p-2",
+        view === ProfileViewType.List && "flex flex-col"
+      )}
+    >
+      {posts.length === 0 ? (
+        <ProfilePosts.Empty />
+      ) : (
+        posts.map((post) => (
+          <SwitchCase
+            key={post.id}
+            value={view}
+            caseBy={{
+              [ProfileViewType.Grid]: <PostCard.Grid />,
+              [ProfileViewType.List]: <PostCard.List />,
+            }}
+          />
+        ))
+      )}
     </div>
   );
 }
 
-function PostCard() {
-  return <div className="bg-gray-800 " style={{ aspectRatio: 1 }}></div>;
-}
+ProfilePosts.Empty = function Empty() {
+  const [view] = useProfileViewType();
+  return (
+    <SwitchCase
+      value={view}
+      caseBy={{
+        [ProfileViewType.Grid]: (
+          <>
+            <PostCard.GridFrame>No</PostCard.GridFrame>
+            <PostCard.GridFrame>visits</PostCard.GridFrame>
+            <PostCard.GridFrame>here</PostCard.GridFrame>
+            <PostCard.GridFrame>🥲</PostCard.GridFrame>
+          </>
+        ),
+        [ProfileViewType.List]: (
+          <>
+            <PostCard.ListFrame>No</PostCard.ListFrame>
+            <PostCard.ListFrame>visits</PostCard.ListFrame>
+            <PostCard.ListFrame>here</PostCard.ListFrame>
+            <PostCard.ListFrame>🥲</PostCard.ListFrame>
+          </>
+        ),
+      }}
+    />
+  );
+};
