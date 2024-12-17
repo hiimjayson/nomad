@@ -1,0 +1,25 @@
+{
+  "name": "nomad",
+  "version": "1.0.0",
+  "description": "nomad",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "eslint": "^9.17.0",
+    "turbo": "^2.3.3",
+    "typescript": "^5.7.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@9.4.0"
+}
