@@ -1,6 +1,6 @@
 export function ProfilePosts() {
   return (
-    <div className="w-full grid grid-cols-3 gap-1">
+    <div className="w-full grid grid-cols-2 gap-1">
       <PostCard />
       <PostCard />
       <PostCard />
