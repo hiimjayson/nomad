@@ -12,12 +12,13 @@ import { POSTS } from "@/features/post-detail/const";
 import { pick } from "es-toolkit";
 import { notFound } from "next/navigation";
 
-export default function PostDetailPage({
+export default async function PostDetailPage({
   params,
 }: {
-  params: { postId: string };
+  params: Promise<{ postId: string }>;
 }) {
-  const post = POSTS.find((post) => post.id === params.postId);
+  const { postId } = await params;
+  const post = POSTS.find((post) => post.id === postId);
 
   if (!post) {
     return notFound();
