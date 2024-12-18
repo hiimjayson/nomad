@@ -12,6 +12,24 @@ import { POSTS } from "@/features/post-detail/const";
 import { pick } from "es-toolkit";
 import { notFound } from "next/navigation";
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ postId: string }>;
+}) {
+  const { postId } = await params;
+  const post = POSTS.find((post) => post.id === postId);
+
+  if (!post) {
+    return notFound();
+  }
+
+  return {
+    title: `${post.space.name}(${post.space.shortAddress}) - Cafegram`,
+    description: `${post.user.nickname}님의 Cafegram 카페 후기 보기`,
+  };
+}
+
 export default async function PostDetailPage({
   params,
 }: {
