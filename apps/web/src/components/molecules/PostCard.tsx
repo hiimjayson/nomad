@@ -36,7 +36,7 @@ function Grid({ id, images, space }: Pick<Post, "id" | "images" | "space">) {
         </Link>
       </GridFrame>
       <div className="p-2">
-        <p className="text-typo-time text-lg md:text-xl font-bold text-ellipsis">
+        <p className="text-typo-primary text-lg md:text-xl font-bold text-ellipsis">
           {space.name}
         </p>
         <p className="text-typo-time text-sm md:text-lg opacity-85 mb-2 text-ellipsis line-clamp-1">
@@ -75,12 +75,12 @@ function List({
             src={images[0]}
           />
           <div className="flex flex-col flex-1">
-            <p className="text-typo-time text-2xl font-bold">{space.name}</p>
+            <p className="text-typo-primary text-2xl font-bold">{space.name}</p>
             <p className="text-typo-time text-sm opacity-50 mb-2">
               {space.shortAddress}
             </p>
             <p className="text-typo-secondary opacity-80 text-sm whitespace-pre-wrap text-ellipsis line-clamp-3">
-              {content}
+              {content.replace(/\n\n/g, "\n")}
             </p>
           </div>
         </div>
