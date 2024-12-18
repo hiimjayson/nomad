@@ -25,7 +25,7 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${post.space.name}(${post.space.shortAddress}) - Cafegram`,
+    title: `${post.space.name}(${post.space.shortAddress}) 후기 - Cafegram`,
     description: `${post.user.nickname}님의 Cafegram 카페 후기 보기`,
   };
 }
