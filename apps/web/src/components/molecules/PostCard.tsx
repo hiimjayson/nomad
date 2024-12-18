@@ -2,28 +2,48 @@
 /* eslint-disable jsx-a11y/alt-text */
 import { Post } from "@/features/post-detail/types";
 import { ArrowRightLongIcon } from "@/icons/arrow-right-long";
+import { cn } from "@/lib/cn";
 import Link from "next/link";
 
-function GridFrame({ children }: { children: React.ReactNode }) {
+function GridFrame({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
   return (
     <div
-      className="
+      className={cn(
+        `
       border-2 border-typo-time 
       flex items-center justify-center
       aspect-square
-      "
+      `,
+        className
+      )}
     >
       {children}
     </div>
   );
 }
-function Grid({ id, images }: Pick<Post, "id" | "images">) {
+function Grid({ id, images, space }: Pick<Post, "id" | "images" | "space">) {
   return (
-    <GridFrame>
-      <Link className="size-full" href={`/p/${id}`}>
-        <img className="size-full object-cover" src={images[0]} />
-      </Link>
-    </GridFrame>
+    <div className="aspect-square">
+      <GridFrame className="size-full">
+        <Link className="size-full" href={`/p/${id}`}>
+          <img className="size-full object-cover" src={images[0]} />
+        </Link>
+      </GridFrame>
+      <div className="p-2">
+        <p className="text-typo-time text-lg md:text-xl font-bold text-ellipsis">
+          {space.name}
+        </p>
+        <p className="text-typo-time text-sm md:text-lg opacity-85 mb-2 text-ellipsis line-clamp-1">
+          {space.shortAddress}
+        </p>
+      </div>
+    </div>
   );
 }
 
