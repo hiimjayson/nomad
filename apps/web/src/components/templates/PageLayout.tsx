@@ -1,14 +1,21 @@
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
-export function PageLayout({ children }: { children: React.ReactNode }) {
+export function PageLayout({
+  className,
+  children,
+}: {
+  className?: string;
+  children: React.ReactNode;
+}) {
   return (
     <div className="w-screen">
-      <div className="flex flex-col min-h-screen w-full max-w-screen-md mx-auto bg-background-default md:border-x-2 border-typo-time">
-        <PageLayout.Header />
-        <main className="flex flex-col z-10">{children}</main>
-        <PageLayout.Footer />
-      </div>
+      {/* <PageLayout.Header /> */}
+      <main className={cn("flex flex-col bg-background-default ", className)}>
+        {children}
+      </main>
+      {/* <PageLayout.Footer /> */}
     </div>
   );
 }
