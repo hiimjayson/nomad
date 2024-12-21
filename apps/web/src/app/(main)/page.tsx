@@ -4,13 +4,11 @@ import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-// import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
-// import { Separator } from "@/components/ui/separator"
-import { CategoryBar } from "@/components/category-bar";
-import { SearchBar } from "@/components/search-bar";
 import { cn } from "@/lib/cn";
 
-export const CONTAINER_PADDING_CLASS = "px-3 lg:px-10 3xl:px-20";
+import { CategoryBar } from "./_components/category-bar";
+import { SearchBar } from "./_components/search-bar";
+import { CONTAINER_PADDING_CLASS } from "./_const";
 
 export default function Home() {
   return (
