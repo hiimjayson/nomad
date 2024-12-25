@@ -1,0 +1,43 @@
+{
+  "name": "혹스턴",
+  "english_name": null,
+  "short_address": "서울 서대문구 연희동",
+  "full_address": "서울 서대문구 연희로 91 2층",
+  "dong_name": "연희동",
+  "naver_map_url": "https://naver.me/55nbp7H0",
+  "google_map_url": null,
+  "americano_price": null,
+  "minimum_charge": null,
+  "minimum_time": null,
+  "has_visited": false,
+  "is_large_franchise": null,
+  "scores": {
+    "outlet": 4,
+    "space": 0,
+    "noise": 0,
+    "food": 0,
+    "beauty": 0,
+    "wifi": 5,
+    "toilet": true,
+    "toilet_cleanliness": 4,
+    "chair": 0,
+    "lighting": 0
+  },
+  "has_non_coffee_menu": false,
+  "parking_info": "",
+  "closed_days": null,
+  "photo_urls": [
+    "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220305_193%2F1646410056605EO1Sn_JPEG%2F271467333_629520225025538_5041099427267513676_n_%25281%2529.jpg",
+    "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220305_299%2F1646410098844IfsdH_JPEG%2F271261858_317893876974121_9181655345187820290_n_%25281%2529.jpg",
+    "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220305_135%2F1646410142119EReOy_JPEG%2F271277252_1005554543651575_8181338434355940738_n_%25281%2529.jpg",
+    "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fvideo-phinf.pstatic.net%2F20241211_219%2F1733927745454aMgC0_JPEG%2F2u89JV3bOx_03.jpg",
+    "https://pup-review-phinf.pstatic.net/MjAyNDEyMTVfMTYg/MDAxNzM0MjM5NzE1MDA4.CTLvgetz1VNwpNFu7JO-kouj7ugioY_kcKArzNv0oiQg.-cmjtJ2MdO9XsyaxZxsVGs1ILdpcQQA0HjmxpXPgzxgg.JPEG/7211D082-4A81-4196-84CA-A496F9F69A22.jpeg?type=w560_sharpen",
+    "https://pup-review-phinf.pstatic.net/MjAyNDEyMTVfMjQ1/MDAxNzM0MjM5NzE0OTIx.MiX_UXFYCQUDAss-vx4O7Ub3eyl0m9_r_8BFjDVLPK4g.bUDk38uyJWlG41Jc21zoxQulOeucFXPQVEgHrNltVsog.JPEG/6C8F8689-1518-4460-991C-86E9F04E1F4E.jpeg?type=w560_sharpen",
+    "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fphinf.pstatic.net%2Ftvcast%2F20240731_1%2FQ2hfo_17224080292852Svms_JPEG%2FPublishThumb_20240731_154020_270.jpg",
+    "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNDEyMTdfMTM0%2FMDAxNzM0NDMzNDMzMjI3.yxhy8eg_Am5XVDe0Po6gXT5gyh6G2svdhRFbjRhyzt8g.M04Hide2LCz7U2XdKatqQAFAEQTifFMSO-1EpG9oPNQg.JPEG%2FIMG_2259.JPG",
+    "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNDEyMDNfMjE4%2FMDAxNzMzMjIzOTQ4ODAz.6F2RWzhiW68YiMOP-WutGsaqVkbVSMXM43Gaxw9CzjUg.qBkiWMzX0W_jTnxzPGqe0sp4_3iIUIN55tsz-HWjz0wg.JPEG%2FIMG_3318.JPG",
+    "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNDA4MTdfMjQw%2FMDAxNzIzODY1MTg0OTYx.HceN7yl9L2GcIpe7H1jy7zG1HQF7nLM4OT4VfvmJTGYg.YHG5QzSNQd2y5doTsuo3rF85BfKcqeau8kF73JZro54g.JPEG%2FIMG_7403.jpg"
+  ],
+  "regular_holiday": [],
+  "business_hours": []
+}
