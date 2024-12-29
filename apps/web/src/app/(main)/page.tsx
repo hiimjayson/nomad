@@ -9,8 +9,29 @@ import { cn } from "@/lib/cn";
 import { CategoryBar } from "./_components/category-bar";
 import { SearchBar } from "./_components/search-bar";
 import { CONTAINER_PADDING_CLASS } from "./_const";
+import { CafeData } from "@/interfaces/cafe";
 
-export default function Home() {
+export const revalidate = 3600; // 1시간마다 재생성
+
+async function getCafes(): Promise<CafeData[]> {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/cafes`,
+      {
+        next: { revalidate: 0 },
+      }
+    );
+    const data = await response.json();
+    return data.cafes;
+  } catch (error) {
+    console.error("Error fetching cafes:", error);
+    return [];
+  }
+}
+
+export default async function Home() {
+  const cafes = await getCafes();
+
   return (
     <div className="flex flex-col items-center">
       <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -40,7 +61,7 @@ export default function Home() {
           CONTAINER_PADDING_CLASS
         )}
       >
-        {Array.from({ length: 12 }).map((_, i) => (
+        {cafes.map((cafe, i) => (
           <Card
             key={i}
             className="group relative overflow-hidden bg-transparent"
@@ -49,7 +70,7 @@ export default function Home() {
               <div className="aspect-square overflow-hidden rounded-xl">
                 <Image
                   src="/images/posts/2/0.jpg"
-                  alt="Property"
+                  alt={cafe.name}
                   width={400}
                   height={400}
                   className="h-full w-full object-cover transition-transform group-hover:scale-105"
@@ -65,17 +86,19 @@ export default function Home() {
               </Button>
               <div className="mt-2 space-y-1">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-semibold">힌터하우스</h3>
+                  <h3 className="font-semibold">{cafe.name}</h3>
                   <div className="flex items-center gap-1">
                     <span>★</span>
-                    <span>4.9</span>
+                    <span>{cafe.beautyScore}</span>
                   </div>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  경기 안양시 석수동
+                  {cafe.shortAddress}
                 </p>
-                <p className="text-sm text-muted-foreground">Jan 5-10</p>
-                <p className="font-semibold">₩180,000 per night</p>
+                <p className="text-sm text-muted-foreground">
+                  {cafe.openTime} - {cafe.closeTime}
+                </p>
+                <p className="font-semibold">아메리카노 {cafe.minPrice}원</p>
               </div>
             </Link>
           </Card>

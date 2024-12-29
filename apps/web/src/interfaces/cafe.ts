@@ -1,0 +1,44 @@
+export interface CafeData {
+  name: string;
+  englishName: string;
+  shortAddress: string;
+  longAddress: string;
+  category: string;
+  naverMapUrl: string;
+  googleMapUrl: string;
+  minPrice: string;
+  minStayTime: string;
+  hasVisited: string;
+  isLargeFranchise: string;
+  socketScore: string;
+  spaceScore: string;
+  noiseScore: string;
+  mealScore: string;
+  beautyScore: string;
+  wifiScore: string;
+  hasToilet: string;
+  toiletScore: string;
+  chairScore: string;
+  lightScore: string;
+  hasNonCoffee: string;
+  parking: string;
+  note: string;
+  closedDays: string;
+  openTime: string;
+  closeTime: string;
+  // 요일별 영업시간
+  mondayOpen: string;
+  mondayClose: string;
+  tuesdayOpen: string;
+  tuesdayClose: string;
+  wednesdayOpen: string;
+  wednesdayClose: string;
+  thursdayOpen: string;
+  thursdayClose: string;
+  fridayOpen: string;
+  fridayClose: string;
+  saturdayOpen: string;
+  saturdayClose: string;
+  sundayOpen: string;
+  sundayClose: string;
+}
