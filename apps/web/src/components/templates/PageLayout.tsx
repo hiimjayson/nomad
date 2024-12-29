@@ -1,22 +1,12 @@
-import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+import { PropsWithChildren } from "react";
 
-export function PageLayout({
-  className,
-  children,
-}: {
-  className?: string;
-  children: React.ReactNode;
-}) {
+export function PageLayout({ children }: PropsWithChildren) {
   return (
-    <div className="w-screen">
-      {/* <PageLayout.Header /> */}
-      <main className={cn("flex flex-col bg-background-default ", className)}>
-        {children}
-      </main>
-      {/* <PageLayout.Footer /> */}
-    </div>
+    <main className="min-h-screen w-full max-w-screen-2xl mx-auto py-4 sm:py-8">
+      {children}
+    </main>
   );
 }
 

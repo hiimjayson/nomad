@@ -10,6 +10,7 @@ import { CategoryBar } from "./_components/category-bar";
 import { SearchBar } from "./_components/search-bar";
 import { CONTAINER_PADDING_CLASS } from "./_const";
 import { CafeData } from "@/interfaces/cafe";
+import { Header } from "./_components/header";
 
 export const revalidate = 3600; // 1시간마다 재생성
 
@@ -34,24 +35,7 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col items-center">
-      <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="w-full flex h-16 items-center justify-between px-6">
-          <Link href="/" className="flex items-center gap-2">
-            <Image
-              src="/images/logo.svg"
-              alt="Nomad Logo"
-              width={160}
-              height={18}
-              className="rounded"
-            />
-          </Link>
-          <nav className="flex items-center gap-4">
-            <Button variant="ghost">Nomad 소개</Button>
-            <Button variant="outline">지역 요청하기</Button>
-            <Button>장소 공유하기</Button>
-          </nav>
-        </div>
-      </header>
+      <Header />
       <SearchBar className="mx-auto flex-1 mb-6" />
       <CategoryBar />
 

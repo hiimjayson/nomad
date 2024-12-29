@@ -77,8 +77,6 @@ export async function GET() {
       sundayClose: row.get("마감시간_일"),
     }));
 
-    console.log(rows.slice(0, 10).map((x) => x.toObject()));
-
     // 빈 데이터 필터링
     const filteredCafes = cafes.filter((cafe) => cafe.name);
 
