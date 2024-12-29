@@ -256,8 +256,13 @@ class MainWindow(QMainWindow):
                 title_label.setWordWrap(True)
                 article_layout.addWidget(title_label)
 
-                # 기사 내용
-                content_label = QLabel(article.get('desc', ''))
+                # 기사 내용 - 키워드 강조 처리
+                content = article.get('desc', '')
+                keywords = ['콘센트', '화장실']
+                for keyword in keywords:
+                    content = content.replace(keyword, f'<b>{keyword}</b>')
+
+                content_label = QLabel(content)
                 content_label.setStyleSheet("""
                     QLabel {
                         color: #34495e;
