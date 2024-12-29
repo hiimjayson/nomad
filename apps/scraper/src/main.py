@@ -1,19 +1,14 @@
-from src.scraper import CafeScraper
-import json
+import sys
+from PyQt6.QtWidgets import QApplication
+from src.gui.main_window import MainWindow
 
 
-def test_scrape_cafe():
-    scraper = CafeScraper()
-    result = scraper.scrape("https://naver.me/55nbp7H0")
-
-    print(result)
-
-    # create json file. result is pydantic model
-    with open("result.json", "w") as f:
-        f.write(result.model_dump_json())
-
-    print('completed ✨')
+def main():
+    app = QApplication(sys.argv)
+    window = MainWindow()
+    window.show()
+    sys.exit(app.exec())
 
 
 if __name__ == "__main__":
-    test_scrape_cafe()
+    main()

@@ -2,6 +2,12 @@ from typing import Optional, List, Dict
 from pydantic import BaseModel
 
 
+class SearchedArticle(BaseModel):
+    title: str
+    desc: str
+    url: str
+
+
 class CafeScores(BaseModel):
     outlet: int = 1
     space: int = 1
@@ -42,3 +48,5 @@ class CafeData(BaseModel):
 
     regular_holiday: List[str] = []
     business_hours: List[BusinessHour] = []
+
+    searched_articles: List[SearchedArticle] = []

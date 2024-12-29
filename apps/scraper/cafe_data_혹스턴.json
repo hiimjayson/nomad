@@ -1,0 +1,21 @@
+{
+  "name": "혹스턴",
+  "english_name": "",
+  "short_address": "서울 서대문구 연희동",
+  "full_address": "서울 서대문구 연희로 91 2층",
+  "americano_price": 4800,
+  "scores": {
+    "outlet": 5,
+    "space": 1,
+    "noise": 1,
+    "food": 1,
+    "beauty": 1,
+    "wifi": 5,
+    "toilet": true,
+    "toilet_cleanliness": 4,
+    "chair": 1,
+    "lighting": 1
+  },
+  "has_non_coffee_menu": false,
+  "parking_info": ""
+}

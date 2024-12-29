@@ -3,9 +3,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from typing import Dict, Optional, List
-from ..types.cafe_data import CafeData
 from time import sleep
-
+import re
+from src.types.cafe_data import CafeData
 
 iframe_selector = '//*[@id="entryIframe"]'
 
@@ -20,6 +20,9 @@ class NaverMapService:
 
     def scrape_basic_info(self, url: str) -> CafeData:
         self.driver.get(url)
+
+        sleep(2)
+
         iframe = self.driver.find_element(By.XPATH, iframe_selector)
         self.driver.switch_to.frame(iframe)
 
@@ -108,29 +111,39 @@ class NaverMapService:
 
         try:
             list_ele = self.driver.find_element(
-                By.XPATH, '//*[@id="app-root"]/div/div/div/div[5]/div[2]/div[1]/div/ul')
+                By.XPATH, '//div[@data-nclicks-area-code="bmv"]/div[contains(@class,"place_section")]/div[contains(@class,"place_section_content")]/ul')
 
             child_eles = list_ele.find_elements(
-                By.CSS_SELECTOR, "li")
+                By.XPATH, "li/a")
 
             for child in child_eles:
                 title_ele = child.find_element(
-                    By.XPATH, 'div[contains(@class,"MXkFw")]/div[1]')
+                    By.XPATH, 'div[contains(@class,"MXkFw")]/div/div/span')
                 price_ele = child.find_element(
-                    By.XPATH, 'div[contains(@class,"MXkFw")]/div[2]')
+                    By.XPATH, 'div[contains(@class,"MXkFw")]/div[contains(@class, "GXS1X")]')
+
+                price_text = re.sub(r'[^0-9]', '', price_ele.text)
+
+                if price_text == '':
+                    continue
 
                 menus.append({
                     'title': title_ele.text,
-                    'price': int(price_ele.text.replace('원', '').replace(',', ''))
+                    # remove all non-numeric characters and convert to int
+                    'price': int(price_text)
                 })
+
+            print('hi', list_ele, child_eles)
+            print(menus)
 
             # menus중에 '아메리카노' 또는 'americano'가 있으면 가격을 반환
             for menu in menus:
-                if menu['title'].lower() in ['아메리카노', 'americano']:
+                if menu['title'] and menu['title'].strip().lower() in ['아메리카노', 'americano']:
                     return menu['price']
 
             return None
-        except:
+        except Exception as e:
+            print(e)
             return None
 
     def extract_photos(self) -> List[str]:

@@ -1,13 +1,15 @@
 from openai import OpenAI
 from typing import List
+from src.types.cafe_data import SearchedArticle
 
 
 class OpenAIService:
     def __init__(self, api_key: str):
         self.client = OpenAI(api_key=api_key)
 
-    def _evaluate_score(self, prompt: str, data: List[str]) -> int:
-        content = prompt + "\n\n" + "\n".join(data)
+    def _evaluate_score(self, prompt: str, articles: List[SearchedArticle]) -> int:
+        content = prompt + "\n\n" + "\n".join(
+            [f"{article.desc}" for article in articles])
 
         response = self.client.chat.completions.create(
             model="gpt-3.5-turbo-0125",
