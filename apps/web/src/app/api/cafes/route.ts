@@ -1,6 +1,7 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import { JWT } from "google-auth-library";
 import { CafeData } from "@/interfaces/cafe";
+import "@/envConfig";
 
 const SHEET_ID = process.env.GOOGLE_SHEET_ID!;
 const GOOGLE_CLIENT_EMAIL = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL!;
