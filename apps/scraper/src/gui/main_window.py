@@ -11,6 +11,8 @@ from src.scraper import Scraper
 import json
 import requests
 from io import BytesIO
+import os
+from src.services.google_sheet_service import GoogleSheetService
 
 
 class ScraperWorker(QThread):
@@ -100,9 +102,9 @@ class MainWindow(QMainWindow):
         self.progress_bar = QProgressBar()
         left_layout.addWidget(self.progress_bar)
 
-        # 오른쪽 영역 (데이터 편집 UI)
-        right_widget = QWidget()
-        right_layout = QVBoxLayout(right_widget)
+        # 오앙 영역 (데이터 편집 UI)
+        center_widget = QWidget()
+        center_layout = QVBoxLayout(center_widget)
 
         # 기본 정보 그룹
         basic_group = QGroupBox("기본 정보")
@@ -138,21 +140,11 @@ class MainWindow(QMainWindow):
         basic_layout.setContentsMargins(10, 10, 10, 10)
 
         basic_group.setLayout(basic_layout)
-        right_layout.addWidget(basic_group)
+        center_layout.addWidget(basic_group)
 
         # 점수 그룹
-        scores_group = QGroupBox("평가 점수")
-        scores_layout = QFormLayout()
-
-        self.score_inputs = {}
-        for score_name in ["콘센트", "공간", "소음", "음식", "예쁨", "와이파이", "화장실 청결도", "의자", "조명"]:
-            score_input = QSpinBox()
-            score_input.setRange(1, 5)
-            scores_layout.addRow(f"{score_name}:", score_input)
-            self.score_inputs[score_name] = score_input
-
-        scores_group.setLayout(scores_layout)
-        right_layout.addWidget(scores_group)
+        scores_group = self.create_score_group()
+        center_layout.addWidget(scores_group)
 
         # 추가 정보 그룹
         extra_group = QGroupBox("추가 정보")
@@ -168,25 +160,50 @@ class MainWindow(QMainWindow):
         self.parking_info_input.setMaximumHeight(60)
         extra_layout.addRow("주차 정보:", self.parking_info_input)
 
-        extra_group.setLayout(extra_layout)
-        right_layout.addWidget(extra_group)
+        # 휴무일 입력칸 추가
+        self.closed_days_input = QLineEdit()
+        extra_layout.addRow("휴무일:", self.closed_days_input)
 
-        # 저장 버튼
+        # 비고 입력칸 추가
+        self.notes_input = QTextEdit()
+        self.notes_input.setMaximumHeight(60)
+        extra_layout.addRow("비고:", self.notes_input)
+
+        extra_group.setLayout(extra_layout)
+        center_layout.addWidget(extra_group)
+
+        # 저장 버튼들을 위한 수평 레이아웃
+        save_buttons_layout = QHBoxLayout()
+
+        # 기존 저장 버튼
         self.save_button = QPushButton("데이터 저장")
         self.save_button.clicked.connect(self.save_data)
-        right_layout.addWidget(self.save_button)
+        save_buttons_layout.addWidget(self.save_button)
 
-        # 기사를 표시할 스크롤 영역 미리 생성
+        # 구글 시트 저장 버튼 추가
+        self.sheet_save_button = QPushButton("구글시트 저장")
+        self.sheet_save_button.clicked.connect(self.save_to_google_sheet)
+        save_buttons_layout.addWidget(self.sheet_save_button)
+
+        center_layout.addLayout(save_buttons_layout)
+
+        # 우측 영역 (기사 표시 UI)
+        right_widget = QWidget()
+        right_layout = QVBoxLayout(right_widget)
+
+        # 기사를 표시할 스크롤 영역
         self.articles_scroll = QScrollArea()
         self.articles_scroll.setWidgetResizable(True)
-        self.articles_scroll.setMaximumHeight(200)
-        right_layout.insertWidget(
-            right_layout.count() - 1, self.articles_scroll)
+        right_layout.addWidget(self.articles_scroll)
 
-        # 분할 레이아웃에 위젯 추가
+        # 분할 레이아웃에 위젯 추가 (1:1:1 비율)
         split_layout.addWidget(left_widget, 1)
+        split_layout.addWidget(center_widget, 1)
         split_layout.addWidget(right_widget, 1)
         layout.addLayout(split_layout)
+
+        # 우측 영역 최소 너비 설정
+        right_widget.setMinimumWidth(400)
 
     def start_scraping(self):
         api_key = self.api_key_input.text()
@@ -208,43 +225,89 @@ class MainWindow(QMainWindow):
         """기사 섹션을 업데이트하는 헬퍼 메서드"""
         articles_group = QGroupBox("검색된 기사")
         articles_layout = QVBoxLayout()
+        articles_layout.setSpacing(15)
+        articles_layout.setContentsMargins(10, 10, 10, 10)
 
         if searched_articles:
             for article in searched_articles:
-                article_widget = QWidget()
-                article_layout = QVBoxLayout()
+                article_frame = QFrame()
+                article_frame.setFrameStyle(
+                    QFrame.Shape.Box | QFrame.Shadow.Raised)
+                article_frame.setStyleSheet("""
+                    QFrame {
+                        background-color: white;
+                        border: 1px solid #ddd;
+                        border-radius: 5px;
+                    }
+                """)
+
+                article_layout = QVBoxLayout(article_frame)
+                article_layout.setSpacing(8)
+                article_layout.setContentsMargins(15, 15, 15, 15)
 
                 # 기사 제목
-                title_label = QLabel(f"제목: {article.get('title', '')}")
+                title_label = QLabel(f"<b>{article.get('title', '')}</b>")
+                title_label.setStyleSheet("""
+                    QLabel {
+                        font-size: 14px;
+                        color: #2c3e50;
+                    }
+                """)
                 title_label.setWordWrap(True)
                 article_layout.addWidget(title_label)
 
                 # 기사 내용
-                content_label = QLabel(f"내용: {article.get('desc', '')}")
+                content_label = QLabel(article.get('desc', ''))
+                content_label.setStyleSheet("""
+                    QLabel {
+                        color: #34495e;
+                        padding: 8px 0px;
+                        font-size: 12px;
+                    }
+                """)
                 content_label.setWordWrap(True)
                 article_layout.addWidget(content_label)
 
                 # 기사 URL
                 url_label = QLabel()
-                url_label.setWordWrap(True)
                 url_label.setOpenExternalLinks(True)
                 url_label.setText(
-                    f"URL: <a href='{article.get('url', '')}'>{article.get('url', '')}</a>")
+                    f"<a href='{article.get('url', '')}'>{article.get('url', '')}</a>")
+                url_label.setStyleSheet("""
+                    QLabel {
+                        color: #3498db;
+                        font-size: 11px;
+                    }
+                """)
                 article_layout.addWidget(url_label)
 
-                # 구분선 추가
-                line = QFrame()
-                line.setFrameShape(QFrame.Shape.HLine)
-                line.setFrameShadow(QFrame.Shadow.Sunken)
-
-                article_widget.setLayout(article_layout)
-                articles_layout.addWidget(article_widget)
-                articles_layout.addWidget(line)
+                articles_layout.addWidget(article_frame)
         else:
             no_articles_label = QLabel("검색된 기사가 없습니다.")
+            no_articles_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            no_articles_label.setStyleSheet("""
+                QLabel {
+                    color: #7f8c8d;
+                    font-size: 14px;
+                    padding: 20px;
+                }
+            """)
             articles_layout.addWidget(no_articles_label)
 
         articles_group.setLayout(articles_layout)
+        articles_group.setStyleSheet("""
+            QGroupBox {
+                background-color: #f8f9fa;
+                border: 1px solid #dee2e6;
+                border-radius: 6px;
+                margin-top: 10px;
+            }
+            QGroupBox::title {
+                color: #495057;
+                font-size: 14px;
+                font-weight: bold;
+            }
+        """)
         self.articles_scroll.setWidget(articles_group)
 
     def on_scraping_finished(self, result):
@@ -331,6 +394,8 @@ class MainWindow(QMainWindow):
             self.non_coffee_check.setChecked(
                 data.get("has_non_coffee_menu", False))
             self.parking_info_input.setText(data.get("parking_info", ""))
+            self.closed_days_input.setText(data.get("closed_days", ""))
+            self.notes_input.setText(data.get("notes", ""))
 
             # 기사 섹션 업데이트
             searched_articles = data.get("searched_articles", [])
@@ -350,8 +415,11 @@ class MainWindow(QMainWindow):
             data = {
                 "name": self.name_input.text(),
                 "english_name": self.english_name_input.text(),
+                "dong_name": self.data.get("dong_name", ""),
                 "short_address": self.short_address_input.text(),
                 "full_address": self.full_address_input.text(),
+                "naver_map_url": self.data.get("naver_map_url", ""),
+                "google_map_url": self.data.get("google_map_url", ""),
                 "americano_price": self.americano_price_input.value(),
                 "scores": {
                     "outlet": self.score_inputs["콘센트"].value(),
@@ -367,6 +435,8 @@ class MainWindow(QMainWindow):
                 },
                 "has_non_coffee_menu": self.non_coffee_check.isChecked(),
                 "parking_info": self.parking_info_input.toPlainText(),
+                "closed_days": self.closed_days_input.text(),
+                "notes": self.notes_input.toPlainText(),
                 "searched_articles": self.data.get("searched_articles", []),
                 "photo_urls": self.data.get("photo_urls", [])
             }
@@ -382,11 +452,15 @@ class MainWindow(QMainWindow):
             QMessageBox.critical(self, "에러", f"데이터 저장 중 오류 발생: {str(e)}")
 
     def load_test_data(self):
-
-        test_data = {"name": "혹스턴", "english_name": None, "short_address": "서울 서대문구 연희동", "full_address": "서울 서대문구 연희로 91 2층", "dong_name": "연희동", "naver_map_url": "https://naver.me/55nbp7H0", "google_map_url": None, "americano_price": 4800, "minimum_charge": None, "minimum_time": None, "has_visited": False, "is_large_franchise": None, "scores": {"outlet": 4, "space": 1, "noise": 1, "food": 1, "beauty": 1, "wifi": 5, "toilet": True, "toilet_cleanliness": 4, "chair": 1, "lighting": 1}, "has_non_coffee_menu": False, "parking_info": "", "closed_days": None, "photo_urls": ["https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220305_193%2F1646410056605EO1Sn_JPEG%2F271467333_629520225025538_5041099427267513676_n_%25281%2529.jpg", "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220305_299%2F1646410098844IfsdH_JPEG%2F271261858_317893876974121_9181655345187820290_n_%25281%2529.jpg", "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220305_135%2F1646410142119EReOy_JPEG%2F271277252_1005554543651575_8181338434355940738_n_%25281%2529.jpg", "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fvideo-phinf.pstatic.net%2F20241211_219%2F1733927745454aMgC0_JPEG%2F2u89JV3bOx_03.jpg",
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                "https://pup-review-phinf.pstatic.net/MjAyNDEyMTVfMTYg/MDAxNzM0MjM5NzE1MDA4.CTLvgetz1VNwpNFu7JO-kouj7ugioY_kcKArzNv0oiQg.-cmjtJ2MdO9XsyaxZxsVGs1ILdpcQQA0HjmxpXPgzxgg.JPEG/7211D082-4A81-4196-84CA-A496F9F69A22.jpeg?type=w560_sharpen", "https://pup-review-phinf.pstatic.net/MjAyNDEyMTVfMjQ1/MDAxNzM0MjM5NzE0OTIx.MiX_UXFYCQUDAss-vx4O7Ub3eyl0m9_r_8BFjDVLPK4g.bUDk38uyJWlG41Jc21zoxQulOeucFXPQVEgHrNltVsog.JPEG/6C8F8689-1518-4460-991C-86E9F04E1F4E.jpeg?type=w560_sharpen", "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fphinf.pstatic.net%2Ftvcast%2F20240731_1%2FQ2hfo_17224080292852Svms_JPEG%2FPublishThumb_20240731_154020_270.jpg", "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNDEyMTdfNjUg%2FMDAxNzM0NDMzNDMxMTU4.QdQThZWfnEvX_csCWGzV1L9-bhPztnP2sXI-dN3vKSIg.9Kc5HZz9AOAF1LDL-iiIlzCBUuza7-qtC2eMKyTaqEog.JPEG%2FIMG_2254.JPG", "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNDEyMDNfMjky%2FMDAxNzMzMjI0Mzg2MjI1.o_hDSELxHgYMJwgxTCbVd35wTkX4XagCPsdf8Y5l_nMg.25ISv32pMdMtog-N81fM4RIpYgCzxCgzCgpXtTxv-Y4g.JPEG%2FIMG_3331.JPG", "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNDA4MTdfMTUx%2FMDAxNzIzODY1MTk2NTQy.BOLQ6cz9HliBg6j3qapEP6J1kW4wo7-KWLsFaQCtD9cg.L_uR1IEwVxMaF6bAnXMoyKSVPPz8xXK6seMXdCMU0xEg.JPEG%2FIMG_7404.jpg"], "regular_holiday": [], "business_hours": []}
-
-        self.on_scraping_finished(json.dumps(test_data))
+        try:
+            example_data_path = os.path.join(
+                os.path.dirname(__file__), 'example_data.json')
+            with open(example_data_path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+                self.on_scraping_finished(json.dumps(data))
+        except Exception as e:
+            QMessageBox.critical(
+                self, "에러", f"테스트 데이터를 불러오는데 실패했습니다: {str(e)}")
 
     def display_results(self, results):
         for idx, result in enumerate(results):
@@ -404,3 +478,73 @@ class MainWindow(QMainWindow):
                 layout.addWidget(photo_urls_text)
 
             # ... 기존 코드 ...
+
+    def create_score_group(self):
+        score_group = QGroupBox("평가점수")
+        layout = QGridLayout()
+
+        # 평가 항목 정의
+        self.score_inputs = {}  # 클래스 멤버로 저장
+        labels = [
+            "콘센트", "공간", "소음", "음식",
+            "예쁨", "와이파이", "화장실 청결도", "의자",
+            "조명"
+        ]
+
+        for i, label in enumerate(labels):
+            row = i // 2  # 행 위치 계산
+            col = i % 2   # 열 위치 계산
+
+            label_widget = QLabel(f"{label}:")
+            spin_box = QSpinBox()
+            spin_box.setRange(1, 5)
+            spin_box.setValue(3)
+
+            # 각 행의 첫 번째 열에는 라벨을, 두 번째 열에는 스핀박스를 배치
+            layout.addWidget(label_widget, row, col * 2)
+            layout.addWidget(spin_box, row, col * 2 + 1)
+
+            # score_inputs 딕셔너리에 저장
+            self.score_inputs[label] = spin_box
+
+        score_group.setLayout(layout)
+        return score_group
+
+    def save_to_google_sheet(self):
+        """구글 시트에 데이터 저장"""
+        try:
+            # 현재 폼의 데이터 수집
+            data = {
+                "name": self.name_input.text(),
+                "english_name": self.english_name_input.text(),
+                "short_address": self.short_address_input.text(),
+                "full_address": self.full_address_input.text(),
+                "naver_map_url": self.data.get("naver_map_url", ""),
+                "google_map_url": self.data.get("google_map_url", ""),
+                "americano_price": self.americano_price_input.value(),
+                "scores": {
+                    "outlet": self.score_inputs["콘센트"].value(),
+                    "space": self.score_inputs["공간"].value(),
+                    "noise": self.score_inputs["소음"].value(),
+                    "food": self.score_inputs["음식"].value(),
+                    "beauty": self.score_inputs["예쁨"].value(),
+                    "wifi": self.score_inputs["와이파이"].value(),
+                    "toilet": self.has_toilet_check.isChecked(),
+                    "toilet_cleanliness": self.score_inputs["화장실 청결도"].value(),
+                    "chair": self.score_inputs["의자"].value(),
+                    "lighting": self.score_inputs["조명"].value()
+                },
+                "has_non_coffee_menu": self.non_coffee_check.isChecked(),
+                "parking_info": self.parking_info_input.toPlainText(),
+                "closed_days": self.closed_days_input.text(),
+                "notes": self.notes_input.toPlainText(),
+            }
+
+            # 구글 시트에 저장
+            sheet_service = GoogleSheetService()
+            sheet_service.save_cafe_data(data)
+
+            QMessageBox.information(self, "성공", "데이터가 구글 시트에 저장되었습니다.")
+
+        except Exception as e:
+            QMessageBox.critical(self, "에러", f"구글 시트 저장 중 오류 발생: {str(e)}")
