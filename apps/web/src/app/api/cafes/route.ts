@@ -1,16 +1,15 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import { JWT } from "google-auth-library";
 import { CafeData } from "@/interfaces/cafe";
-import "@/envConfig";
-
-const SHEET_ID = process.env.GOOGLE_SHEET_ID!;
-const GOOGLE_CLIENT_EMAIL = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL!;
-const GOOGLE_PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY!.replace(
-  /\\n/g,
-  "\n"
-);
 
 export async function GET() {
+  const SHEET_ID = process.env.GOOGLE_SHEET_ID!;
+  const GOOGLE_CLIENT_EMAIL = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL!;
+  const GOOGLE_PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY!.replace(
+    /\\n/g,
+    "\n"
+  );
+
   try {
     // JWT 인증 설정
     const jwt = new JWT({
